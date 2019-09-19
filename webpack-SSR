@@ -1,0 +1,47 @@
+# webpack 实现SSR打包 （极客时间34，35讲）
+
+### 什么是SSR？
+渲染： HTML + CSS + JS + Data -> 渲染后的HTML
+
+所有模板等资源都存储在服务端
+内网机器拉取数据更快
+一个HTML返回所有数据
+
+SSR打包就是通过服务器渲染，然后请求减少的时间，减少白屏实践，对于SEO友好。
+
+### SSR代码实现思路。
+
+#### 服务端
+
+1. 使用react-dom/server 的renderToString方法将React组件渲染成字符串
+2. 服务器短路由返回对应的模板
+
+#### 客户端
+
+1. 打包出针对服务端的组件
+
+
+### webpack ssr打包存在的问题
+
+
+**浏览器的全局变量（node.js中没有document，window）**
+
+* 组件适配：将不兼容的组件根据打包环境进行适配
+* 请求适配：将fetch或者ajax发送请求的写法改成isomorphic-fetch或者axios
+
+
+**样式问题(nodejs无法解析css)
+
+* 方案一：服务器打包通过ignore-loader忽略掉css的解析
+* 方案二：将style-loader替换成isomorphic-style-loader
+
+### 如何解决样式不显示的问题？
+
+使用打包出来的浏览器短html为模板，设置占位符，动态插入组件！
+
+
+
+
+
+
+
